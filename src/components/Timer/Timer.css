@@ -1,0 +1,56 @@
+/* Time picker component: Only shows when setting the timer length */
+
+.timePicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+}
+
+.manualInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.timeInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+}
+
+/* Actual timer component */
+
+.Timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: rgb(63, 163, 130);
+
+  height: 200px;
+  margin: 20px;
+}
+
+.setTimeButton {
+  border-radius: 8px;
+  background-color: rosybrown;
+
+  padding: 8px 16px;
+
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+
+  cursor: pointer;
+}
+

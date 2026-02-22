@@ -7,5 +7,60 @@
   border-radius: 15px;
   padding: 20px 30px;
 
-  background-color: #cf3c3c;
+  background-color: #ffdab9;
+}
+
+.timerLengths {
+  display: flex;
+  flex-direction: row;
+
+  gap: 10px;
+}
+
+.Pomodoro,
+.shortBreak,
+.longBreak {
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+  background-color: #f4978e;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+
+  gap: 20px;
+}
+.startButton,
+.resetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 20px;
+
+  border-radius: 10px;
+  background-color: #f08080;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+
+  cursor: pointer;
+}
+
+.display {
+  font-size: 68px;
+  font-weight: bold;
+  color: #bb4e4e;
 }
