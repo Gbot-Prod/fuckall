@@ -1,6 +1,5 @@
 import './App.css'
 import Header from './components/Header/Header'
-import Alarm from './components/Alarm/Alarm'
 import Timer from './components/Timer/Timer'
 import Stopwatch from './components/Stopwatch/Stopwatch'
 import PomodoroTimer from './components/PomodoroTimer/PomodoroTimer'
@@ -12,15 +11,18 @@ function App() {
   const components = [
     { name: 'Timer', component: <Timer /> },
     { name: 'Pomodoro Timer', component: <PomodoroTimer /> },
-    { name: 'Tic Tac Toe', component: <TicTacToe /> },
+    { name: 'Stopwatch', component: <Stopwatch /> },
+    { name: 'To Do List', component: <ToDoList /> },
   ]
 
   return (
     <div className="app">
       <Header />
-
-      <ToDoList />
-      <Timer />
+      <main className="componentsGrid">
+        {components.map((comp, index) => (
+          <div className="componentContainer" key={index}>{comp.component}</div>
+        ))}
+      </main>
     </div>
   )
 }
