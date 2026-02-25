@@ -1,15 +1,35 @@
 import "./Timer.css"
 import { useState, useRef } from "react";
 
-let totalTime = 0;
+const clickSound = new Audio("/click.mp3");
+clickSound.load();
+clickSound.volume = 0.5;
 
-function TimePicker() {
+const alarm = new Audio("/alarm.mp3");
+let alarmPlaying = false;
+alarm.currentTime = 0;
+alarm.load();
+alarm.volume = 0.5;
+
+const handleAlarm = () => {
+  if (alarmPlaying) return;
+  alarmPlaying = true;
+
+  alarm.play();
+
+  setTimeout(() => {
+    alarmPlaying = false;
+  }, 1000);
+}
+
+function TimePicker({ onConfirm }: { onConfirm: (ms: number) => void }) {
   const [hour, setHour] = useState("00");
   const [minute, setMinute] = useState("00");
   const [second, setSecond] = useState("00");
 
   function handleConfirm() {
-    totalTime = (parseInt(hour) * 3600 + parseInt(minute) * 60 + parseInt(second)) * 1000;
+    const totalTimeMs = (parseInt(hour) * 3600 + parseInt(minute) * 60 + parseInt(second)) * 1000;
+    onConfirm(totalTimeMs);
   }
 
   return (
@@ -21,22 +41,48 @@ function TimePicker() {
         <span>:</span>
         <input className="timeInput" type="text" value={second} onChange={(e) => setSecond(e.target.value)} />
       </div>
-      <button className="confirmButton" onClick={handleConfirm}>Confirm</button>
+      <button className="confirmButton" onClick={() => {handleConfirm(); clickSound.play()}}>Confirm</button>
     </div>
   );
 }
 
 function Timer() {
   const [isRunning, setIsRunning] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
   const [showPicker, setShowPicker] = useState(false);
+  const [totalTimeMs, setTotalTime] = useState(0);
   const intervalIdRef = useRef<number | undefined>(undefined);
-  let alarm = new Audio("/alarm.mp3")
+
+  function handleConfirm(totalTimeMs: number) {
+    setTotalTime(totalTimeMs);
+    setShowPicker(false);
+  }
+
+  function handleStartStop() {
+    if (!isRunning) {
+      setIsRunning(true)
+      clearInterval(intervalIdRef.current); 
+
+      // set1 second tick
+      intervalIdRef.current = window.setInterval(() => {
+        setTotalTime(prev => {
+          if (prev <= 1000) {
+            handleAlarm();
+            clearInterval(intervalIdRef.current);
+            return 0;
+          }
+          return prev - 1000;
+        });
+      }, 1000);
+    } else {
+      setIsRunning(false);
+      clearInterval(intervalIdRef.current);
+    }
+  }
 
   function formatTime() {
-    let hours = Math.floor((totalTime / 1000 / 60 / 60) % 60);
-    let minutes = Math.floor((totalTime / 1000 / 60) % 60);
-    let seconds = Math.floor((totalTime / 1000) % 60);
+    let hours = Math.floor((totalTimeMs / 1000 / 60 / 60) % 60);
+    let minutes = Math.floor((totalTimeMs / 1000 / 60) % 60);
+    let seconds = Math.floor((totalTimeMs / 1000) % 60);
 
     const hoursStr = String(hours).padStart(2, '0');
     const minutesStr = String(minutes).padStart(2, '0');
@@ -53,13 +99,29 @@ function Timer() {
         </button>
       </div>
       <div className="timerDisplay">
-        {formatTime()}
+        <span>{formatTime()}</span>
       </div>
       <div className="controlButtonsContainer">
-        <button className="startStopButton">Start</button>
-        <button className="ResetButton">Reset</button>
+        <button className="startStopButton" onClick={() => {
+          if (alarm && !alarm.paused && !alarm.ended) {
+            alarm.pause();
+            alarm.currentTime = 0;
+          }
+          clickSound.play();
+          handleStartStop();
+          }}>
+          {isRunning ? "Stop" : "Start"}
+        </button>
+        <button className="ResetButton" onClick={() => {
+          setTotalTime(0)
+          setIsRunning(false)
+          clearInterval(intervalIdRef.current)
+          clickSound.play()
+          }}>
+          Reset
+        </button>
       </div>
-      {showPicker && <TimePicker />}
+      {showPicker && <TimePicker onConfirm={handleConfirm} />}
     </div>
   );
 }

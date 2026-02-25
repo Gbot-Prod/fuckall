@@ -44,6 +44,7 @@ function PomodoroTimer() {
   const handleStartStop = () => {
     if (!isRunning) {
       setIsRunning(true);
+      
       intervalIdRef.current = window.setInterval(() => {
         setElapsedTime(prev => {
           if (prev <= 1000) {
@@ -104,7 +105,7 @@ function PomodoroTimer() {
           }
           clickSound.play();
           handleStartStop();
-        }}>
+          }}>
           {isRunning ? "Stop" : "Start"}
         </button>
 

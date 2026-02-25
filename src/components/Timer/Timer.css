@@ -1,5 +1,4 @@
 /* Time picker component: Only shows when setting the timer length */
-
 .timePicker {
   display: flex;
   flex-direction: column;
@@ -15,15 +14,21 @@
   align-items: center;
   justify-content: center;
 
+  gap: 3px;
+
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: bold;
+
 }
 
 .timeInput {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  width: 30px;
+  text-align: center;
 
-  width: 20px;
+  border-radius: 6px;
+  padding: 4px;
+
+  background-color: aliceblue;
 }
 
 /* Actual timer component */
@@ -35,10 +40,10 @@
   justify-content: center;
 
   border-radius: 10px;
+  padding: 20px;
   background-color: rgb(63, 163, 130);
 
-  height: 200px;
-  margin: 20px;
+
 }
 
 .setTimeButton {
@@ -54,3 +59,34 @@
   cursor: pointer;
 }
 
+.timerDisplay{
+  border-radius: 10px;
+  background-color: aliceblue;
+  padding: 10px 16px;
+  margin: 10px;
+
+  font-size: large;
+  font-weight: bold;
+}
+
+.controlButtonsContainer{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  gap: 6px;
+}
+
+.confirmButton,
+.startStopButton,
+.ResetButton {
+  border-radius: 8px;
+  padding: 6px 12px;
+
+  background-color: #074F57;
+
+  font-weight: bold;
+  color: aliceblue;
+
+  cursor: pointer;
+}
