@@ -17,6 +17,9 @@ function Sortable({ id, index, onDelete }: SortableProps) {
       <button className="deleteButton" onClick={() => onDelete(index)}>
         Delete
       </button>
+      <div className="dragSource">
+          <p>::</p>
+        </div>
     </li>
   );
 }
@@ -59,7 +62,7 @@ function ToDoList() {
           value={newTask}
           onChange={handleInputChange}
         />
-        <button className="addButton" onClick={addTask}>Add</button>
+        <button className="addButton" onClick={addTask}>Add Task</button>
       </div>
       
       <div className="taskList">

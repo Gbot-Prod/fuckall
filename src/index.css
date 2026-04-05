@@ -4,6 +4,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer components {
+  .sidebarIcon {
+    @apply relative flex items-center justify-center p-2
+           h-12 w-12 rounded-4xl hover:rounded-lg bg-black hover:bg-gray-200 
+           cursor-pointer transform-gpu will-change-transform
+           transition-[background-color,border-radius,transform]
+           ease-out duration-150; 
+  }
+
+  .sidebarTooltip {
+    @apply absolute left-14 top-1/2 transform -translate-y-1/2 p-2 rounded-md shadow-md
+           text-white bg-gray-900 text-xs font-bold transition-all duration-100 scale-0 origin-left;
+  }
+}
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);

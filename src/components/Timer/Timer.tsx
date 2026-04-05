@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 
 const clickSound = new Audio("/click.mp3");
 clickSound.load();
-clickSound.volume = 0.5;
+clickSound.volume = 0.2;
 
 const alarm = new Audio("/alarm.mp3");
 let alarmPlaying = false;

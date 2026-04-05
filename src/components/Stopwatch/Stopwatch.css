@@ -9,11 +9,6 @@
   border-radius: 15px;
 }
 
-.display {
-  font-size: 5em;
-  color: black;
-}
-
 .startButton, .stopButton, .resetButton {
   border: none;
   border-radius: 6px; 

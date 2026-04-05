@@ -1,34 +1,54 @@
 .tictactoeComponent {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.gameboard {
-  display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+  border-radius: 15px;
+  background: aquamarine;
 }
 
+.gameboard,
 .board-row {
   display: flex;
   gap: 0;
 }
 
+.gameTitle {
+  font: 700 24px system-ui, serif;
+}
+
+.gameStatus {
+  font: 600 18px system-ui, serif;
+  margin-bottom: 10px;
+}
+
+.gameboard {
+  flex-direction: column;
+}
+
 .square {
   width: 60px;
   height: 60px;
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(90, 90, 90);
+  border: 1px solid rgb(90, 90, 90);
   border-radius: 0;
+  font: 600 2rem system-ui, serif;
+  cursor: pointer;
+}
 
-  font-family: system-ui, serif;
-  font-size: 2rem;
-  font-weight: 600;
+.tictactoeResetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 10px;
+  margin-top: 10px;
+  background: #75aee4;
+  color: rgb(255, 255, 255);
+  font: 700 16px system-ui, sans-serif;
   cursor: pointer;
 }

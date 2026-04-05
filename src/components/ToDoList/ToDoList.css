@@ -66,3 +66,17 @@
   font-size: 14px;
   font-weight: 600;
 }
+
+.dragSource {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 24px;
+  height: 24px;
+  background-color: #F57799;
+  border-radius: 8px;
+  
+  margin-left: 6px;
+  font-weight: bold;
+}

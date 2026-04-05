@@ -1,119 +1,91 @@
 import "./PomodoroTimer.css"
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { formatMMSS } from "../../lib/timeFormatUtils";
+import { playClickSound, playAlarm, stopAlarm } from "../../lib/audio";
+import { useCountdownTimer } from "../../hooks/useCountdownTimer";
 
-const clickSound = new Audio("/click.mp3");
-clickSound.load();
-clickSound.volume = 0.5;
+const timerDurations = {
+  pomodoro: 25 * 60 * 1000,
+  shortBreak: 5 * 60 * 1000,
+  longBreak: 15 * 60 * 1000,
+};
 
-const alarm = new Audio("/alarm.mp3");
-let alarmPlaying = false;
-alarm.currentTime = 0;
-alarm.load();
-alarm.volume = 0.5;
-
-const handleAlarm = () => {
-  if (alarmPlaying) return;
-  alarmPlaying = true;
-
-  alarm.play();
-
-  setTimeout(() => {
-    alarmPlaying = false;
-  }, 1000);
-}
+type TimerType = keyof typeof timerDurations;
 
 function PomodoroTimer() {
-  const timerDurations = {
-    pomodoro: 25 * 60 * 1000,
-    shortBreak: 5 * 60 * 1000,
-    longBreak: 15 * 60 * 1000,
+  const [selectedTimer, setSelectedTimer] = useState<TimerType>("pomodoro");
+  const { timeMs, isRunning, start, pause, resume, setTime } = useCountdownTimer({
+    onFinish: () => {
+      playAlarm();
+    },
+  });
+
+  useEffect(() => {
+    setTime(timerDurations[selectedTimer]);
+  }, [selectedTimer, setTime]);
+
+  const handleTimerChange = (timerType: TimerType) => {
+    stopAlarm();
+    setSelectedTimer(timerType);
   };
-  
-  const [currentTimer, setCurrentTimer] = useState(timerDurations.pomodoro);
-  const [isRunning, setIsRunning] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(timerDurations.pomodoro);
-  const intervalIdRef = useRef<number | undefined>(undefined);
-  
-  const handleTimerChange = (timerType: keyof typeof timerDurations) => {
-    setCurrentTimer(timerDurations[timerType]);
-    setElapsedTime(timerDurations[timerType]);
-    setIsRunning(false);
-    clearInterval(intervalIdRef.current);
-  }
 
-  const handleStartStop = () => {
-    if (!isRunning) {
-      setIsRunning(true);
-      
-      intervalIdRef.current = window.setInterval(() => {
-        setElapsedTime(prev => {
-          if (prev <= 1000) {
-            handleAlarm();
-            clearInterval(intervalIdRef.current);
-            return 0;
-          }
-          return prev - 1000;
-        });
-      }, 1000);
-    } else {
-      setIsRunning(false);
-      clearInterval(intervalIdRef.current);
+  const handleStartPause = () => {
+    stopAlarm();
+    if (isRunning) {
+      pause();
+      return;
     }
-  }
 
-  function formatTime() {
-    let minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
-    let seconds = Math.floor((elapsedTime / 1000) % 60);
+    if (timeMs <= 0) {
+      start(timerDurations[selectedTimer]);
+      return;
+    }
 
-    const minutesStr = String(minutes).padStart(2, '0');
-    const secondsStr = String(seconds).padStart(2, '0');
+    resume();
+  };
 
-    return `${minutesStr}:${secondsStr}`;
-  }
+  const handleReset = () => {
+    stopAlarm();
+    setTime(timerDurations[selectedTimer]);
+  };
 
   return (
     <div className="pomodoro-timer">
       <div className="timerLengths">
         <button className="Pomodoro" onClick={() => {
-          clickSound.play();
+          playClickSound();
           handleTimerChange("pomodoro");
         }}>
           Pomodoro
         </button>
 
         <button className="shortBreak" onClick={() => {
-          clickSound.play();
+          playClickSound();
           handleTimerChange("shortBreak");
         }}>
           Short Break
         </button>
 
         <button className="longBreak" onClick={() => {
-          clickSound.play();
+          playClickSound();
           handleTimerChange("longBreak");
         }}>
           Long Break
         </button>
       </div>
-      
-      <div className="display">{formatTime()}</div>
+
+      <div className="display">{formatMMSS(timeMs)}</div>
       <div className="controls">
         <button className="startButton" onClick={() => {
-          if (alarm && !alarm.paused && !alarm.ended) {
-            alarm.pause();
-            alarm.currentTime = 0;
-          }
-          clickSound.play();
-          handleStartStop();
-          }}>
-          {isRunning ? "Stop" : "Start"}
+          playClickSound();
+          handleStartPause();
+        }}>
+          {isRunning ? "Pause" : "Start"}
         </button>
 
         <button className="resetButton" onClick={() => {
-          clickSound.play();
-          setElapsedTime(currentTimer);
-          setIsRunning(false);
-          clearInterval(intervalIdRef.current);
+          playClickSound();
+          handleReset();
         }}>Reset</button>
       </div>
     </div>
