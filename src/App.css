@@ -1,23 +1,19 @@
 .app {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-
-  margin-left: 120px;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem calc(var(--sidebar-width, 80px) + 1rem);
+  gap: 1rem;
 }
 
 .componentsGrid {
-  width: 100%;
+  flex: 1;
   display: grid;
   align-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
 }
 
 .componentContainer {
   width: 100%;
+  max-width: 1200px;
 }
