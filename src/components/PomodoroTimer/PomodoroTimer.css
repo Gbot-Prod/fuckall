@@ -3,43 +3,65 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  border-radius: 15px;
-  padding: 20px 30px;
-
-  background-color: #ffdab9;
+  gap: var(--space-lg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  background-color: var(--color-bg-pomodoro);
+  box-shadow: var(--shadow-lg);
 }
 
 .timerLengths {
   display: flex;
   flex-direction: row;
-
-  gap: 10px;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .Pomodoro,
 .shortBreak,
 .longBreak {
+  display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 8px 14px;
-
-  border-radius: 10px;
-  background-color: #f4978e;
-
-  font-size: 16px;
-  font-weight: bold;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-accent-pomodoro);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
   color: white;
-
   cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--transition-base) ease;
+}
+
+.Pomodoro:hover,
+.shortBreak:hover,
+.longBreak:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.Pomodoro:active,
+.shortBreak:active,
+.longBreak:active {
+  transform: translateY(0);
+}
+
+.Pomodoro:focus,
+.shortBreak:focus,
+.longBreak:focus {
+  outline: none;
+  border-color: white;
 }
 
 .controls {
   display: flex;
   flex-direction: row;
-
-  gap: 20px;
+  gap: var(--space-xl);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .startButton,
@@ -47,21 +69,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 10px 20px;
-
-  border-radius: 10px;
-  background-color: #f08080;
-
-  font-size: 16px;
-  font-weight: bold;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-accent-pomodoro);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
   color: white;
-
   cursor: pointer;
+  border: none;
+  transition: all var(--transition-base) ease;
+}
+
+.startButton:hover,
+.resetButton:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.startButton:active,
+.resetButton:active {
+  transform: translateY(0);
 }
 
 .display {
-  font-size: 68px;
-  font-weight: bold;
-  color: #bb4e4e;
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+  text-align: center;
+  line-height: var(--line-height-tight);
+  letter-spacing: 0.05em;
+  color: var(--color-accent-pomodoro);
 }
