@@ -17,7 +17,7 @@ type DiscordSideBarProps = {
 
 const MIN_WIDTH = 80
 const MAX_WIDTH = 320
-const MIN_HEIGHT = 180
+const MIN_HEIGHT = 210
 const MAX_HEIGHT = 720
 
 function DiscordSideBar({ items, activeItem, onSelect, width, height, onResize }: DiscordSideBarProps) {

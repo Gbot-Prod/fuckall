@@ -8,6 +8,7 @@ import ToDoList from './components/ToDoList/ToDoList'
 import Timer from './components/Timer/Timer'
 import TicTacToe from './components/TicTacToe/TicTacToe'
 import Stopwatch from './components/Stopwatch/Stopwatch'
+import Alarm from './components/Alarm/Alarm'
 
 type ComponentEntry = {
   name: string
@@ -16,7 +17,7 @@ type ComponentEntry = {
 }
 
 const DEFAULT_SIDEBAR_WIDTH = 80
-const DEFAULT_SIDEBAR_HEIGHT = 320
+const DEFAULT_SIDEBAR_HEIGHT = 400
 
 function App() {
   const [sidebarSize, setSidebarSize] = useState({
@@ -29,6 +30,7 @@ function App() {
     { name: 'To Do List', icon: <ListTodo size={24} />, component: <ToDoList /> },
     { name: 'Tic Tac Toe', icon: <Trophy size={24} />, component: <TicTacToe /> },
     { name: 'Stopwatch', icon: <AlarmClock size={24} />, component: <Stopwatch /> },
+    { name: 'Alarm', icon: <Clock3 size={24} />, component: <Alarm /> },
   ]
 
   const [activeComponent, setActiveComponent] = useState(components[0].name)
